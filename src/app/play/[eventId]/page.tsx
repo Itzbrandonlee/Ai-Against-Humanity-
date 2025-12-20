@@ -47,7 +47,7 @@ export default function PlayPage() {
   const canStartCollecting = isJudge && isJudging && answers.length === 0 && !isGameOver;
   const hasTimer = Boolean(event?.collectStartAt && event?.collectDurationSec);
 
-  const { msLeft, secondsLeft, progress /*, isRunning*/ } = useCountdown(
+  const { msLeft, secondsLeft, progress } = useCountdown(
     event?.collectStartAt ?? null,
     event?.collectDurationSec ?? 0,
     Boolean(isCollecting)
@@ -62,11 +62,11 @@ export default function PlayPage() {
       kickedRef.current = null;
       return;
     }
-    if (!hasTimer) return;                // wait until server timestamp populates
+    if (!hasTimer) return;                
     if (secondsLeft > 0) return;
 
     const key = `${evId}:${roundIndex}`;
-    if (kickedRef.current === key) return; // one-shot per round
+    if (kickedRef.current === key) return; 
     kickedRef.current = key;
 
     // schedule microtask to avoid racing the snapshot render
